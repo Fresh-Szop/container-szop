@@ -104,8 +104,11 @@ export type Subscription = {
   status: string
 }
 
+export type SubscriptionOverview = Omit<Subscription, "finalDiscountedPrice">
+  & { finalQuantity: number }
+
 export type SubscriptionsList = {
-  subscriptions: Subscription[]
+  subscriptions: SubscriptionOverview[]
   pages: {
     firstPage: number
     currentPage: number

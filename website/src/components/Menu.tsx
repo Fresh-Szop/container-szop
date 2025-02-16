@@ -25,7 +25,7 @@ export const Menu = () => {
         </Link>
         {(isLoggedIn && userData) && (
           <li className="text-3xl flex items-center gap-4 p-4">
-            Witaj <Link to="/user-profile"> <span title="Ustawienia konta" className="font-bold">{userData.lastName === "Jeznach" ? "Marcinku Jeznałke" : `${userData.firstName} ${userData.lastName}`}</span></Link>
+            Witaj <Link to="/user-profile"> <span title="Ustawienia konta" className="font-bold">{`${userData.firstName} ${userData.lastName}`}</span></Link>
           </li>
         )}
       </div>

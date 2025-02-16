@@ -29,7 +29,7 @@ const App = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   return (
     <>
-      <DebugComponent />
+      {/* <DebugComponent /> */}
       <ToastContainer autoClose={5000} draggable pauseOnHover theme="colored" style={{ fontSize: "1.6rem" }} position="bottom-right" />
       <Menu />
       {isLoggedIn && <BasketBar />}

@@ -16,6 +16,7 @@ import recipesRoutes from "@/api/recipes.js"
 import usersRoutes from "@/api/users.js"
 import debugAuthRoutes from "@/api/auth/$.js"
 import ordersRoutes from "@/api/orders.js"
+import subscriptionRoutes from "@/api/subscriptions.js"
 
 const _ = kv
 const app = new Hono()
@@ -65,7 +66,7 @@ app.route("", recipesRoutes)
 app.route("", basketsRoutes)
 app.route("", addressesRoutes)
 app.route("", ordersRoutes)
-// app.route("", subscriptionRoutes)
+app.route("", subscriptionRoutes)
 
 console.log(`>>>    Server is running on ${$.GATEWAY}    <<<`)
 serve({

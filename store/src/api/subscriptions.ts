@@ -80,13 +80,24 @@ subscriptionRoutes.get(
 			lastPage,
 		}
 
-		const [simpleSubscriptions] = await repo.Subscriptions.selectPageWhen({
+		const [simpleSubscriptions, subscriptionProducts] = await repo.Subscriptions.selectPageWhen({
 			filters: query,
 			pageRequest: query,
 		})
 
+		const aggregatedQuantities = subscriptionProducts.reduce((acc, p) => {
+			if (!acc[p.subscriptionId]) {
+				acc[p.subscriptionId] = 0
+			}
+			acc[p.subscriptionId] += p.quantity
+			return acc
+		}, {} as Record<number, number>)
+
 		return c.json({
-			subscriptions: simpleSubscriptions,
+			subscriptions: simpleSubscriptions.map(s => ({
+				...s,
+				finalQuantity: aggregatedQuantities[s.subscriptionId]
+			})),
 			pages,
 		})
 	},
