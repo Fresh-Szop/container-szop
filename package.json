@@ -1,0 +1,9 @@
+{
+	"name": "fresh-szop",
+	"scripts": {
+		"push-common": "npm run warehouse:push-common && npm run store:push-common && npm run gateway:push-common",
+		"warehouse:push-common": "rm -fr warehouse/src/common && cp -r common warehouse/src/common && cp .env warehouse/.env",
+		"store:push-common": "rm -fr store/src/common && cp -r common store/src/common && cp .env store/.env",
+		"gateway:push-common": "rm -fr gateway/src/common && cp -r common gateway/src/common && cp .env gateway/.env"
+	}
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fresh Szop Login Callback</title>
+    <style>
+      body * {
+        all: unset;
+      }
+
+      body {
+        background-color: #f6ece7;
+        color: rgb(16 38 38);
+        display: flex;
+        flex-direction: column;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        height: 100vh;
+        width: 100vw;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1rem;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .shop {
+        color: #437047;
+        font-weight: bold;
+      }
+
+      h1 {
+        font-size: 3.3rem;
+        display: inline;
+        padding-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        display: inline-block;
+        padding-bottom: 4rem;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner {
+        height: 10rem;
+        width: 10rem;
+        position: relative;
+        border-radius: 50%;
+        border-width: 0.5rem;
+        border-style: solid;
+        border-top-color: #315134;
+        border-right-color: transparent;
+        border-bottom-color: #315134;
+        border-left-color: transparent;
+        animation: rotate 3s linear infinite;
+      }
+
+      .spinner::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        height: 7rem;
+        width: 7rem;
+        border-radius: 50%;
+        border-width: 8px;
+        border-style: solid;
+        border-top-color: #437047;
+        border-right-color: transparent;
+        border-bottom-color: #437047;
+        border-left-color: transparent;
+        animation: rotate 4s linear infinite;
+      }
+
+      .spinner::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 2.5rem;
+        left: 2.5rem;
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+        border-width: 8px;
+        border-style: solid;
+        border-top-color: #5d9862;
+        border-right-color: transparent;
+        border-bottom-color: #5d9862;
+        border-left-color: transparent;
+        animation: rotate 2s linear infinite;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #27201c;
+          color: #daf5f5;
+        }
+
+        .shop {
+          color: #5d9862;
+        }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.7/base64.min.js"></script>
+  </head>
+
+  <body>
+    <h1>Przetwarzanie logowania</h1>
+    <h2>
+      Prosimy nie zamykać tej strony, za chwilę wrócisz do
+      <span class="shop">Fresh Szop</span>
+    </h2>
+    <div class="spinner"></div>
+    <script style="display: none" type="module">
+      window.addEventListener("unload", e => {
+        if (window.opener && !window.opener.closed) {
+          const event = new Event("auth-closed")
+          window.opener.dispatchEvent(event)
+        }
+      })
+
+      const loginData = await fetch(
+        `http://localhost:42069/auth/google/finalize${window.location.search}`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      )
+      const loginResult = await loginData.text()
+      if (loginData.ok) {
+        document.cookie = `auth-result=${Base64.encode(loginResult)};path=/`
+        document.cookie = `auth-error=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`
+      } else {
+        document.cookie = `auth-error=${Base64.encode(loginResult)};path=/`
+        document.cookie = `auth-result=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`
+      }
+      window.close()
+    </script>
+  </body>
+</html>

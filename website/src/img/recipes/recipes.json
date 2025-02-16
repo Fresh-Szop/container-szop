@@ -1,0 +1,165 @@
+[
+  {
+    "recipeId": 1,
+    "img": "image1.png",
+    "name": "Ciasto czekoladowe",
+    "category": "desery",
+    "difficulty": 2,
+    "steps": [
+      "Rozgrzej piekarnik do 175°C.",
+      "Wymieszaj mąkę, cukier, kakao, proszek do pieczenia i sól.",
+      "Dodaj jajka, mleko, olej i ekstrakt waniliowy. Ubijaj do uzyskania gładkiej masy.",
+      "Wlej ciasto do natłuszczonej formy do pieczenia.",
+      "Piec przez 30-35 minut."
+    ],
+    "ingredients": [
+      { "name": "Mąka", "productId": 18, "quantity": "2 szklanki" },
+      { "name": "Cukier", "productId": 31, "quantity": "1,5 szklanki" },
+      { "name": "Kakao", "productId": 39, "quantity": "0,75 szklanki" }
+    ]
+  },
+  {
+    "recipeId": 2,
+    "img": "image2.png",
+    "name": "Makaron Carbonara",
+    "category": "posiłki",
+    "difficulty": 3,
+    "steps": [
+      "Ugotuj makaron zgodnie z instrukcją na opakowaniu.",
+      "Smaż bekon, aż będzie chrupiący.",
+      "Wymieszaj jajka, ser i pieprz w misce.",
+      "Połącz makaron, bekon i mieszankę jajeczną.",
+      "Podawaj od razu."
+    ],
+    "ingredients": [
+      { "name": "Makaron", "productId": 4, "quantity": "200g" },
+      { "name": "Bekon", "productId": 15, "quantity": "100g" },
+      { "name": "Jajka", "productId": 5, "quantity": "2" }
+    ]
+  },
+  {
+    "recipeId": 3,
+    "img": "image3.png",
+    "name": "Sałatka Cezar",
+    "category": "sałatki",
+    "difficulty": 1,
+    "steps": [
+      "Posiekaj sałatę i umieść w misce.",
+      "Dodaj grzanki i starty ser parmezan.",
+      "Wymieszaj składniki sosu i polej sałatkę.",
+      "Wymieszaj, aby połączyć."
+    ],
+    "ingredients": [
+      { "name": "Sałata", "productId": 8, "quantity": "1 główka" },
+      { "name": "Grzanki", "productId": 26, "quantity": "1 szklanka" },
+      { "name": "Ser parmezan", "productId": 42, "quantity": "0,5 szklanki" }
+    ]
+  },
+  {
+    "recipeId": 4,
+    "img": "image4.png",
+    "name": "Zupa pomidorowa",
+    "category": "zupy",
+    "difficulty": 2,
+    "steps": [
+      "Rozgrzej olej w garnku i podsmaż cebulę i czosnek.",
+      "Dodaj pomidory i gotuj, aż będą miękkie.",
+      "Zblenduj mieszankę na gładką masę.",
+      "Dodaj bulion i gotuj na wolnym ogniu przez 20 minut.",
+      "Dopraw solą i pieprzem."
+    ],
+    "ingredients": [
+      { "name": "Pomidory", "productId": 24, "quantity": "4 szklanki" },
+      { "name": "Cebula", "productId": 16, "quantity": "1 szklanka" },
+      { "name": "Czosnek", "productId": 47, "quantity": "2 ząbki" }
+    ]
+  },
+  {
+    "recipeId": 5,
+    "img": "image5.png",
+    "name": "Grzanka z serem",
+    "category": "przekąski",
+    "difficulty": 1,
+    "steps": [
+      "Posmaruj jedną stronę każdej kromki chleba masłem.",
+      "Umieść ser między dwoma kromkami, stroną z masłem na zewnątrz.",
+      "Grilluj na patelni, aż będą złociste."
+    ],
+    "ingredients": [
+      { "name": "Chleb", "productId": 48, "quantity": "2 kromki" },
+      { "name": "Ser", "productId": 49, "quantity": "2 plastry" },
+      { "name": "Masło", "productId": 30, "quantity": "2 łyżki" }
+    ]
+  },
+  {
+    "recipeId": 6,
+    "img": "image6.png",
+    "name": "Kurczak curry",
+    "category": "posiłki",
+    "difficulty": 4,
+    "steps": [
+      "Marynuj kurczaka w przyprawach.",
+      "Gotuj cebulę, czosnek i imbir w garnku.",
+      "Dodaj kurczaka i gotuj, aż się zarumieni.",
+      "Dodaj pomidory i gotuj na wolnym ogniu, aż kurczak będzie gotowy.",
+      "Podawaj z ryżem."
+    ],
+    "ingredients": [
+      { "name": "Kurczak", "productId": 43, "quantity": "500g" },
+      { "name": "Cebula", "productId": 21, "quantity": "1 szklanka" },
+      { "name": "Pomidory", "productId": 19, "quantity": "2 szklanki" }
+    ]
+  },
+  {
+    "recipeId": 7,
+    "img": "image7.png",
+    "name": "Naleśniki",
+    "category": "desery",
+    "difficulty": 1,
+    "steps": [
+      "Wymieszaj mąkę, cukier, proszek do pieczenia i sól.",
+      "Dodaj mleko, jajka i roztopione masło. Mieszaj do uzyskania gładkiej masy.",
+      "Wlej ciasto na gorącą patelnię.",
+      "Gotuj, aż pojawią się bąbelki, następnie przewróć i gotuj, aż będą złociste."
+    ],
+    "ingredients": [
+      { "name": "Mąka", "productId": 6, "quantity": "1 szklanka" },
+      { "name": "Mleko", "productId": 41, "quantity": "1 szklanka" },
+      { "name": "Jajka", "productId": 49, "quantity": "2" }
+    ]
+  },
+  {
+    "recipeId": 8,
+    "img": "image8.png",
+    "name": "Gulasz wołowy",
+    "category": "posiłki",
+    "difficulty": 3,
+    "steps": [
+      "Zrumień wołowinę w garnku.",
+      "Dodaj cebulę, marchew i ziemniaki.",
+      "Wlej bulion i gotuj na wolnym ogniu, aż wołowina będzie miękka.",
+      "Dopraw solą i pieprzem."
+    ],
+    "ingredients": [
+      { "name": "Wołowina", "productId": 5, "quantity": "500g" },
+      { "name": "Cebula", "productId": 26, "quantity": "1 szklanka" },
+      { "name": "Marchew", "productId": 42, "quantity": "2 szklanki" }
+    ]
+  },
+  {
+    "recipeId": 9,
+    "img": "image9.png",
+    "name": "Sałatka owocowa",
+    "category": "sałatki",
+    "difficulty": 1,
+    "steps": [
+      "Posiekaj różne owoce i umieść w misce.",
+      "Dodaj sok z cytryny.",
+      "Wymieszaj, aby połączyć."
+    ],
+    "ingredients": [
+      { "name": "Różne owoce", "productId": 24, "quantity": "4 szklanki" },
+      { "name": "Sok z cytryny", "productId": 16, "quantity": "2 łyżki" }
+    ]
+  }
+]

@@ -1,0 +1,164 @@
+@startuml
+
+' configuration
+hide circle
+skinparam linetype ortho
+left to right direction
+
+entity Users as "**Users**" {
+	**user_id**: text
+	--
+	**email**: text(unique not-null)
+	**first_name**: text(not-null)
+	**last_name**: text(not-null)
+	**picture**: text(not-null)
+}
+
+entity Auth_Link_KV as "**Auth_Link_KV**" {
+	**magic_token**: text<uuid>
+	--
+	**link**: text(not-null)
+	**state**: text(not-null)
+	**expires**: int<datetime_ms>(not-null)
+}
+
+entity Products as "**Products**" {
+	**product_id**: int
+	--
+ 	**name**: text(unique not-null)
+	**producer**: text(not-null)
+	**category**: text<enum>(not-null)
+	**unit**: text<enum>(not-null)
+	**avg_unit_weight_kg**: real(not-null)
+	**typical_unit_weight**: text
+	**description**: text(not-null)
+}
+note right
+	**category**: vegetable, fruit, ingredients
+	**unit**: szt, kg, g, opak
+end note
+
+entity Product_Prices as "**Product_Prices**" {
+	**product_id**: int(not-null)
+	**month**: int<enum>(not-null)
+	--
+	**base_price**: real(not-null)
+	**discounted_price**: real
+	**discounted**: real
+	**is_season**: int<boolean>(not-null)
+}
+note right
+	**month**: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+end note
+
+entity Product_Availability as "**Product_Availability**" {
+	**product_id**: int
+	--
+	**available_units**: int(not-null)
+}
+
+entity Baskets as "**Baskets**" {
+	**user_id**: text(not-null)
+	**product_id**: int(not-null)
+	--
+	**quantity**: int(not-null)
+}
+
+entity Addresses as "**Addresses**" {
+	**user_id**: text(not-null)
+	**address_name**: text(not-null)
+	--
+	**first_name**: text(not-null)
+	**last_name**: text(not-null)
+	**first_address_line**: text(not-null)
+	**second_address_line**: text
+	**postal_code**: text(not-null)
+	**postal_city**: text(not-null)
+	**phone_number**: text(not-null)
+}
+
+entity Orders as "**Orders**" {
+	**order_id**: int
+	--
+	**user_id**: text(not-null)
+	**order_date**: int<timestamp_ms>(not-null default=now())
+	**preparation_date**: int<timestamp_ms>
+	**sent_date**: int<timestamp_ms>
+	**delivery_date**: int<timestamp_ms>
+	
+	//Freezed from Basket://
+	**final_base_price**: real(not-null)
+	**final_discounted_price**: real(not-null)
+	
+	//Freezed from Address://
+	**first_name**: text(not-null)
+	**last_name**: text(not-null)
+	**first_address_line**: text(not-null)
+	**second_address_line**: text
+	**postal_code**: text(not-null)
+	**postal_city**: text(not-null)
+	**phone_number**: text(not-null)
+}
+
+entity Order_Rejections as "**Order_Rejections**" {
+	**order_id**: int(not-null)
+	**product_id**: int(not-null)
+	--
+	**expected_quantity**: int(not-null)
+	**actual_quantity**: int(not-null)
+}
+
+entity Order_Products as "**Order_Products**" {
+	**order_id**: int(not-null)
+	**product_id**: int(not-null)
+	--
+	**quantity**: int(not-null)
+
+	//Freezed from Product_Prices://
+	**base_price**: real(not-null)
+	**discounted_price**: real
+	**final_base_price**: real(not-null)
+	**final_discounted_price**: real(not-null)
+}
+
+entity Subscriptions as "**Subscriptions**" {
+	**subscription_id**: int
+	--
+	**user_id**: text(not-null)
+	**creationDate**: int<timestamp_ms>(not-null default=now())
+	**lastOrderDate**: int<timestamp_ms>(not-null default=now())
+	**frequency**: int(not-null default=4)
+	**address_name**: s.text()
+	**status**: text<enum>(not-null default='paused')
+}
+note right
+	**status**: active, paused
+end note
+
+entity Subscription_Products as "**Subscription_Products**" {
+	**subscription_id**: int(not-null)
+	**product_id**: int(not-null)
+	--
+	**quantity**: int(not-null)
+}
+
+Users ||--o{ Baskets
+Users ||--o{ Addresses
+Users ||--o{ Orders
+Users ||--o{ Subscriptions
+
+Products ||--|{ Product_Prices
+Products ||--|| Product_Availability
+Products ||--o{ Baskets
+Products ||--o{ Order_Products
+Products ||--o{ Order_Rejections
+Products ||--o{ Subscription_Products
+
+Addresses |o--o{ Subscriptions
+
+Orders ||-|{ Order_Products
+Orders ||-o{ Order_Rejections
+
+Subscriptions ||-|{ Subscription_Products
+
+@enduml

@@ -1,0 +1,160 @@
+version: '3.8'
+
+name: Fresh-Szop
+services:
+
+  store_db:
+    image: mysql:latest
+    container_name: store_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${STORE_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${STORE_DB_DATABASE}
+      MYSQL_USER: ${STORE_DB_USER}
+      MYSQL_PASSWORD: ${STORE_DB_PASSWORD}
+    expose:
+      - 3306
+    ports:
+      - "${STORE_DB_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-hlocalhost", "-uroot", "-p${STORE_DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  warehouse_db:
+    image: postgres:latest
+    networks:
+      - fresh-szop-nw
+    container_name: warehouse_db
+    environment:
+      POSTGRES_USER: ${WAREHOUSE_DB_USER}
+      POSTGRES_PASSWORD: ${WAREHOUSE_DB_PASSWORD}
+      POSTGRES_DB: ${WAREHOUSE_DB_DATABASE}
+    ports:
+      - "${WAREHOUSE_DB_PORT}:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${WAREHOUSE_DB_USER}", "-d", "${WAREHOUSE_DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  # gateway_kv:
+  #   image: valkey:latest
+  # networks:
+  #   - fresh-szop-nw
+  #   container_name: gateway_kv
+  #   networks:
+    # fresh-szop-nw:
+    #   aliases:
+    #     - gateway_kv
+  #   ports:
+  #     - "${GATEWAY_KV_PORT}:6379"
+
+  store:
+    image: node:22
+    container_name: store
+    links:
+      - "store_db:store_db"
+    platform: linux/arm64
+    depends_on:
+      store_db:
+        condition: service_healthy
+    ports:
+      - "${STORE_PORT}:${STORE_PORT}"
+    volumes:
+      - ./store:/app
+    working_dir: /app
+    command: |
+      sh -c "
+      npm install &&
+      npm run db:prepare &&
+      npm run dev
+      "
+    healthcheck:
+      test: ["CMD", "curl", "localhost:${STORE_PORT}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+  warehouse:
+    image: node:22
+    container_name: warehouse
+    platform: linux/arm64
+    depends_on:
+      warehouse_db:
+        condition: service_healthy
+    ports:
+      - "${WAREHOUSE_PORT}:${WAREHOUSE_PORT}"
+    volumes:
+      - ./warehouse:/app
+    working_dir: /app
+    command: |
+      sh -c "
+      npm install &&
+      npm run dev
+      "
+      npm run db:prepare &&
+    healthcheck:
+      test: ["CMD", "curl", "localhost:${WAREHOUSE_PORT}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # gateway:
+  #   image: node:22
+  # networks:
+  #   - fresh-szop-nw
+  #   container_name: gateway
+  #   networks:
+    # fresh-szop-nw:
+    #   aliases:
+    #     - gateway
+  #   platform: linux/arm64
+  #   depends_on:
+  #     gateway_kv:
+  #       condition: service_started
+  #     store:
+  #       condition: service_healthy
+  #     warehouse:
+  #       condition: service_healthy
+  #   ports:
+  #     - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+  #   volumes:
+  #     - ./gateway:/app
+  #   working_dir: /app
+  #   command: |
+  #     sh -c "
+  #     npm install &&
+  #     npm run db:prepare &&
+  #     npm run dev
+  #     "
+  #   healthcheck:
+  #     test: ["CMD", "curl", "localhost:${GATEWAY_PORT}" ]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+  # website:
+  #   image: node:22
+  # networks:
+  #   - fresh-szop-nw
+  #   container_name: website
+  #   networks:
+    # fresh-szop-nw:
+    #   aliases:
+    #     - website
+  #   platform: linux/arm64
+  #   depends_on:
+  #     gateway:
+  #       condition: service_healthy
+  #   ports:
+  #     - "${WEBSITE_PORT}:${WEBSITE_PORT}"
+  #   volumes:
+  #     - ./website:/app
+  #   working_dir: /app
+  #   command: |
+  #     sh -c "
+  #     npm install &&
+  #     npm run dev
+  #     "
